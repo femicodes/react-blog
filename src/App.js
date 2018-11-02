@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Posts from '../src/components/Posts';
 
 class App extends Component {
+
+  state = {
+    articles: []
+  }
+
+  componentDidMount = async () => {
+      const req = await fetch(`https://api.jsonbin.io/b/5bc9d646716f9364f8c75a82`)
+
+      const res = await req.json();
+     this.setState({ articles: res });
+      console.log(this.state.articles)
+  }
+
   render() {
     return (
-      <div className="App">
+      <div>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <h1 className="App-title">the Blog.</h1>
         </header>
+        <Posts post={this.state.articles} />
       </div>
     );
   }
